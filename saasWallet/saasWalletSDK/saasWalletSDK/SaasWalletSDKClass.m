@@ -163,4 +163,9 @@
     [instance queryPayChannel];
 }
 
++ (void)notifyTradeResult:(NSString *)orderNumber andChannelCode:(NSString *)channelCode {
+    SaasWalletSDK *instance = [SaasWalletSDK sharedInstance];
+    [instance notifyTradeResult:orderNumber andChannelCode:channelCode];
+}
+
 @end

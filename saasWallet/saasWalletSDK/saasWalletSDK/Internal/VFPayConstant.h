@@ -21,6 +21,7 @@ static NSString * const reqApiVersion = @"/gateway-mobile/vfinance";
 
 //rest api online
 static NSString * const kRestApiQueryChannel = @"%@%@/getAllChannels";
+static NSString * const kRestApiNotifyTradeResult = @"%@%@/syn_trade";
 static NSString * const kRestApiPay = @"%@%@/all_pay";
 static NSString * const kRestApiRefund = @"%@%@/refund";
 static NSString * const kRestApiQueryBills = @"%@%@/bills";

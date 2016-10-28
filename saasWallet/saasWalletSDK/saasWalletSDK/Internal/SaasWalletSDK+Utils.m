@@ -68,6 +68,13 @@
     }];
 }
 
+- (void)notifyTradeResult:(NSString *)orderNumber andChannelCode:(NSString *)channelCode {
+    
+    VFHTTPSessionManager *manager = [VFPayUtil getVFHTTPSessionManager];
+    
+    [manager GET:[VFPayUtil getBestHostWithFormat:kRestApiNotifyTradeResult] parameters:@{@"instOrderNo": orderNumber, @"channelCode": channelCode, @"appKey": [VFPayCache sharedInstance].appId} progress:nil success:^(NSURLSessionTask *task, id response) {} failure:^(NSURLSessionTask *operation, NSError *error) {}];
+}
+
 #pragma mark - 条件查询支付订单
 
 - (void)reqQueryBills:(VFQueryBillsReq *)req {

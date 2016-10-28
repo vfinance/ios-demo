@@ -102,5 +102,9 @@
  *  获取后台支持的支付渠道
  */
 - (void)queryPayChannel;
+/**
+ *  通知后台支付结果
+ */
+- (void)notifyTradeResult:(NSString *)orderNumber andChannelCode:(NSString *)channelCode;
 
 @end

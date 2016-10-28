@@ -23,6 +23,7 @@ class ViewController: UIViewController, SaasWalletSDKDelegate, UITableViewDelega
     @IBOutlet weak var payChannelTableViewHeightConstraint: NSLayoutConstraint!
     
     var payChannels: [String] = []
+    var selectedPayChannelIndex: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +46,8 @@ class ViewController: UIViewController, SaasWalletSDKDelegate, UITableViewDelega
         productNameTextField.delegate = self
         orderNumberTextField.delegate = self
         
-        payAmountTextField.text = "0.01"
+        payAmountTextField.text = "0.1"
+        payAmountTextField.isEnabled = false
         productNameTextField.text = "测试商品"
         orderNumberTextField.text = "demo"+String(format: "%.0f", NSDate().timeIntervalSince1970*1000.0)
     }
@@ -79,6 +81,11 @@ class ViewController: UIViewController, SaasWalletSDKDelegate, UITableViewDelega
     func onSaasWalletSDKResp(_ resp: VFBaseResp!) {
         switch resp.type {
         case VFObjsType.payResp:
+            if let index = selectedPayChannelIndex {
+                if index < payChannels.count {
+                    SaasWalletSDK.notifyTradeResult(orderNumberTextField.text, andChannelCode: payChannels[index])
+                }
+            }
             if let resp = resp as? VFPayResp {
                 if resp.resultCode == 0 {
                     self.showAlertView(message: resp.resultMsg)
@@ -196,6 +203,8 @@ class ViewController: UIViewController, SaasWalletSDKDelegate, UITableViewDelega
             print("unsupported channel")
             return
         }
+        
+        selectedPayChannelIndex = indexPath.row
         
         payRequest.title = productNameTextField.text
         payRequest.totalFee = "\(Int(Double(payAmountTextField.text!)!*100))"
